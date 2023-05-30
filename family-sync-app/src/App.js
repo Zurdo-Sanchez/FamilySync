@@ -1,9 +1,9 @@
-import './App.css';
-import Loginview from './component/loginView/loginView'
+import "./App.css";
+import Loginview from "./containers/loginContainer";
 function App() {
   return (
     <div className="App">
-      <Loginview/>
+      <Loginview />
     </div>
   );
 }
