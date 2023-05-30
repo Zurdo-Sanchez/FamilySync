@@ -7,9 +7,25 @@ export const setUserAction = (payload) => {
   };
 };
 
-export const prueba = (payload) => {
+export const setIsLoggedAction = (value) => {
   return {
-    type: type.PRUEBA,
+    type: type.SET_IS_LOGGED,
+    value,
+  };
+};
+
+export const authAction = (payload) => {
+  return {
+    type: type.AUTH_ACTION,
     payload,
   };
 };
+
+export const signOutAction = (payload) => {
+  return {
+    type: type.SIGNOUT_ACTION,
+    payload,
+  };
+};
+
+

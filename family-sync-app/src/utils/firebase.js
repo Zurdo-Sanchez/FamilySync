@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAFaaNm3f-spoibjcKjVxvKiz3P_4SmdHE",
-  authDomain: "family-sync-app.firebaseapp.com",
-  projectId: "family-sync-app",
-  storageBucket: "family-sync-app.appspot.com",
-  messagingSenderId: "56865158288",
-  appId: "1:56865158288:web:8ec75809c0c1d006f89415",
-  measurementId: "G-ZRPMW94FCY"
+  apiKey: "AIzaSyAdOWx0Oq_N2mLojo1qqiBO6K87WnE7YnU",
+  authDomain: "familysync-app.firebaseapp.com",
+  projectId: "familysync-app",
+  storageBucket: "familysync-app.appspot.com",
+  messagingSenderId: "728277839826",
+  appId: "1:728277839826:web:240641395fc245a815a20b",
+  measurementId: "G-7MNM2P1X59"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
