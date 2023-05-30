@@ -8,7 +8,7 @@ import {
 } from "redux-saga/effects";
 
 // Actions
-import { prueba } from "../actions/userActions";
+import * as userActions from "../actions/actionsType/userActionsType";
 
 // Selectors
 
@@ -19,7 +19,7 @@ function* pruebaSagas() {
 
 // Watchers
 function* pruebasSagasWatcher() {
-  yield takeLatest(userActionTypes.PRUEBA, pruebaSagas);
+  yield takeLatest(userActions.PRUEBA, pruebaSagas);
 }
 
 //exports

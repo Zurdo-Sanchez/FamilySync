@@ -6,10 +6,10 @@ const initialState = Map({
 });
 
 const login = (state = initialState, action) => {
-  console.log('ACTION', action);
+  console.log("ACTION", action);
   switch (action.type) {
     case type.SET_USER_ACTION:
-      return state.set('userData', action.payload);
+      return state.set("userData", action.payload);
 
     default:
       return state;
