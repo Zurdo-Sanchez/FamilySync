@@ -1,10 +1,13 @@
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import Loginview from "./containers/loginContainer";
+import { Provider } from "react-redux";
+import { store } from "./utils/store";
+import myRoutes from "./routes/myRoutes";
 function App() {
   return (
-    <div className="App">
-      <Loginview />
-    </div>
+    <Provider store={store}>
+      <RouterProvider router={myRoutes} />
+    </Provider>
   );
 }
 
