@@ -4,7 +4,7 @@ import LoginView from "../component/login/loginView";
 import { getUserSelector } from "../selectors/loginSelector";
 
 // Functions
-import { setUserAction, signOutAction, authAction } from "../actions/userActions";
+import { signOutAction } from "../actions/userActions";
 
 const mapStateToProps = (state) => ({
   getUserSelector: getUserSelector(state),
@@ -12,12 +12,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setUserAction: (payload) => dispatch(setUserAction(payload)),
-    authAction: (payload) => dispatch(authAction(payload)),
     signOutAction: (payload) => dispatch(signOutAction(payload)),
   };
 };
 
-const loginContainer = connect(mapStateToProps, mapDispatchToProps)(LoginView);
+const dashboardContainer = connect(mapStateToProps, mapDispatchToProps)(LoginView);
 
-export default loginContainer;
+export default dashboardContainer;
