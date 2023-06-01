@@ -6,7 +6,7 @@ const initialState = Map({
   isLogged: null
 });
 
-const loginContainer = (state = initialState, action) => {
+const loginReducer = (state = initialState, action) => {
   console.log("ACTION", action);
   switch (action.type) {
     case type.SET_USER_ACTION:
@@ -19,4 +19,4 @@ const loginContainer = (state = initialState, action) => {
   }
 };
 
-export default loginContainer;
+export default loginReducer;
