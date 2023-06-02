@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import LoginView from "../component/loginView/loginView";
+import LoginView from "../component/login/loginView";
 // States
 import { getUserSelector } from "../selectors/loginSelector";
 
