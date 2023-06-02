@@ -1,10 +1,18 @@
+import { RouterProvider } from "react-router-dom";
+import { ThemeProvider } from "@mui/material";
+import theme from './utils/Theme';
+
 import "./App.css";
-import Loginview from "./containers/loginContainer";
+import { Provider } from "react-redux";
+import { store } from "./utils/store";
+import router from "./routes/myRouter";
 function App() {
   return (
-    <div className="App">
-      <Loginview />
-    </div>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </Provider>
   );
 }
 
