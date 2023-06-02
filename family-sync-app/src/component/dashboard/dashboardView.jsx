@@ -1,13 +1,13 @@
 import React from "react";
 import { Grid } from "@mui/material";
 
-function DashboadView(prop) {
+function DashboadView(props) {
   const {
     //state
     getUserSelector,
     //function
     signOutAction,
-  } = prorp;
+  } = props;
 
   return (
     <>

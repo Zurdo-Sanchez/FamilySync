@@ -5,7 +5,7 @@ const Login = loadable(() => import('../containers/loginContainer'));
 const Dashboard = loadable(() => import('../containers/DashboardContainer'));
 
 const myRouter = createBrowserRouter([
-    {
+  {
       path: "/login",
       element: <Login/>,
       errorElement: <ErrorPage />,

@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import LoginView from "../component/login/loginView";
+import DashboadView from "../component/dashboard/dashboardView";
 // States
 import { getUserSelector } from "../selectors/loginSelector";
 
@@ -16,6 +16,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const dashboardContainer = connect(mapStateToProps, mapDispatchToProps)(LoginView);
+const dashboardContainer = connect(mapStateToProps, mapDispatchToProps)(DashboadView);
 
 export default dashboardContainer;
