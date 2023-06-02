@@ -32,61 +32,56 @@ function LoginView(props) {
   return (
     <div className="container">
       <div className="formulario">
-        <h1 className="title">FamilySync</h1>
+        <h1>Family Sync Login</h1>
 
-        <form>
-          <div>
+        <form method="post">
+          <div className="username">
             <input
               type="text"
-              placeholder="Escriba su email"
+              required
               onChange={(e) => {
                 setEmail(e.currentTarget.value);
               }}
             />
-            <label>Nombre De Usuario</label>
+            <label>User Name</label>
           </div>
-
-          <div className="password">
+          <div class="username">
             <input
               type="password"
-              placeholder="Password"
+              required
               onChange={(e) => {
                 setPassword(e.currentTarget.value);
               }}
             />
             <label>Password</label>
           </div>
-
-          <div className="remember"> ¿Olvido su Password? </div>
-
-          <imput type="submit" value="Sign Up"></imput>
-
-          <div className="register">
-            <a href="#">Register</a>
+          <div className="recordar">¿Forgot your Password?</div>
+          <div>
+            <input type="submit" value="Sign Up"></input>
+          </div>
+          <div className="registrarse">
+            I Want To <a href="#">Register</a>
           </div>
 
-          <div>
-            <div className="divbutton">
+          <div class="init">
+            <div className="recordar">
               <button
-                className="button"
+                class="btnmail"
                 onClick={() => handledDataLogin("email")}
-              >
-                SignUp With Email
-              </button>
+              ></button>
             </div>
-            <div className="divbutton">
+            <div className="recordar">
               <button
-                className="button"
+                className="btngoogle"
                 onClick={() => handledDataLogin("google")}
-              >
-                Login With Google
-              </button>
+              ></button>
             </div>
 
-            <div className="divbutton">
-              <button className="button" onClick={() => handledDataSignup()}>
-                SignUp With GitHub
-              </button>
+            <div className="recordar">
+              <button
+                className="btngit"
+                onClick={() => handledDataSignup()}
+              ></button>
             </div>
           </div>
         </form>
