@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import { Grid, Typography } from "@mui/material";
 import Styles from "./loginStyles";
-
+import './loginStyles.css'
 import authFunction from "../../utils/authFunction";
-import icoGit from "../../utils/media/git.png";
-import icoGoogle from "../../utils/media/google.png";
-import icoEmail from "../../utils/media/mail.png";
 
 function LoginView(props) {
   const classes = Styles();
@@ -35,12 +31,12 @@ function LoginView(props) {
   };
 
   return (
-    <Grid className={classes.container}>
-      <Grid className={classes.form}>
-        <Typography className={classes.title}>Family Sync Login</Typography>
+    <div className="container">
+      <div className="formulario">
+        <h1>Family Sync Login</h1>
 
         <form method="post">
-          <Grid className="username">
+          <div className="username">
             <input
               type="text"
               required
@@ -49,8 +45,8 @@ function LoginView(props) {
               }}
             />
             <label>User Name</label>
-          </Grid>
-          <Grid class="username">
+          </div>
+          <div class="username">
             <input
               type="password"
               required
@@ -59,40 +55,43 @@ function LoginView(props) {
               }}
             />
             <label>Password</label>
-          </Grid>
-          <Grid className="recordar">¿Forgot your Password?</Grid>
-          <Grid>
+          </div>
+          <div className="recordar">¿Forgot your Password?</div>
+          <div>
             <input
               className={classes.button}
               type="submit"
               value="Sign Up"
             ></input>
-          </Grid>
-          <Grid className="registrarse">
+          </div>
+          <div className="registrarse">
             I Want To <a href="#">Register</a>
-          </Grid>
+          </div>
 
-          <Grid class={classes.containerProvaiders}>
-            <Grid className={classes.provaiders}>
-              <img src={icoEmail}></img>
-            </Grid>
-            <Grid className={classes.provaiders}>
-              <img src={icoGoogle}></img>
-            </Grid>
-            <Grid className={classes.provaiders}>
-              <img src={icoGit}></img>
-            </Grid>
-          </Grid>
+          <div class="init">
+            <div className="recordar">
+              <button
+                class="btnmail"
+                onClick={() => handledDataLogin("email")}
+              ></button>
+            </div>
+            <div className="recordar">
+              <button
+                className="btngoogle"
+                onClick={() => handledDataLogin("google")}
+              ></button>
+            </div>
 
-          <Grid className="recordar">
-            <button
-              className="btngit"
-              onClick={() => handledDataSignup()}
-            ></button>
-          </Grid>
+            <div className="recordar">
+              <button
+                className="btngit"
+                onClick={() => handledDataSignup()}
+              ></button>
+            </div>
+          </div>
         </form>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 }
 
