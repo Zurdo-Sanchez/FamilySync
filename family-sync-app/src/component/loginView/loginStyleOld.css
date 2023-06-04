@@ -120,7 +120,7 @@ input[type="submit"]:hover {
 }
 
 .btnmail {
-  background-image: url("./src/mail.png");
+  background-image: url("../../utils/media/mail.png");
   background-repeat: no-repeat;
   height: 60px;
   width: 70px;
@@ -130,7 +130,7 @@ input[type="submit"]:hover {
 }
 
 .btngoogle {
-  background-image: url("./src/google.png");
+  background-image: url("../../utils/media/google.png");
   background-repeat: no-repeat;
   height: 60px;
   width: 70px;
@@ -139,7 +139,7 @@ input[type="submit"]:hover {
   border: none;
 }
 .btngit {
-  background-image: url("./src/git.png");
+  background-image: url("../../utils/media/git.png");
   background-repeat: no-repeat;
   height: 60px;
   width: 70px;
