@@ -1,10 +1,19 @@
-import React, { useState } from "react";
-import Styles from "./loginStyles";
-import './loginStyles.css'
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Styles from "./loginStyles.js";
+import "./loginStyle.css";
+
 import authFunction from "../../utils/authFunction";
 
 function LoginView(props) {
   const classes = Styles();
+  const {
+    //STATES
+    getIsLoggedSelector,
+    //ACTIONS
+    authAction,
+  } = props;
+  const navigate = useNavigate();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
@@ -29,6 +38,12 @@ function LoginView(props) {
 
     authFunction(dataSignup);
   };
+
+  useEffect(() => {
+    if (getIsLoggedSelector) {
+      navigate("/dashboard");
+    }
+  }, [getIsLoggedSelector]);
 
   return (
     <div className="container">

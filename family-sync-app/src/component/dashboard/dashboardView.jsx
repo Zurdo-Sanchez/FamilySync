@@ -11,8 +11,8 @@ function DashboadView(props) {
 
   return (
     <>
-      <Grid>hola! {getUserSelector}</Grid>
-      <button onClick={signOutAction()}></button>
+      <Grid>hola! {getUserSelector.displayName}</Grid>
+      <button onClick={() => signOutAction()}></button>
     </>
   );
 }
