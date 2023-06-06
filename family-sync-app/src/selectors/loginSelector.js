@@ -5,3 +5,4 @@ function getState(state) {
 }
 
 export const getUserSelector = (state) => getState(state).get('userData');
+export const getIsLoggedSelector = (state) => getState(state).get('isLogged');

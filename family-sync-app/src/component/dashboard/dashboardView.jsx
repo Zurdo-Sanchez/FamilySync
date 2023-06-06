@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 function DashboadView(props) {
   const {
@@ -11,8 +11,8 @@ function DashboadView(props) {
 
   return (
     <>
-      <Grid>hola! {getUserSelector}</Grid>
-      <button onClick={signOutAction()}></button>
+      <Grid>hola! {getUserSelector.displayName}</Grid>
+      <button onClick={() => signOutAction()}>sign Out</button>
     </>
   );
 }
