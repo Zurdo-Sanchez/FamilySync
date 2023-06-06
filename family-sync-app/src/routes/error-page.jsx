@@ -1,9 +1,13 @@
-import { useRouteError } from "react-router-dom";
+import { useEffect } from "react";
+import { Navigate, useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
   const error = useRouteError();
   console.error(error);
 
+  useEffect(()=>{
+    Navigate('/login')
+  })
   return (
     <div id="error-page">
       <h1>Oops!</h1>

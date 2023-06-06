@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
 import App from "../App";
 // States
-import { getUserSelector } from "../selectors/loginSelector";
+import { getIsLoggedSelector } from "../selectors/loginSelector";
 
 // Functions
 import { signOutAction } from "../actions/userActions";
 
 const mapStateToProps = (state) => ({
-  getUserSelector: getUserSelector(state),
+    getIsLoggedSelector: getIsLoggedSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => {

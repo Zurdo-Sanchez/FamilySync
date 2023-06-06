@@ -1,21 +1,21 @@
 import { RouterProvider } from "react-router-dom";
-import { ThemeProvider } from "@mui/material";
-import theme from './utils/Theme';
-
-import "./App.css";
-import { Provider } from "react-redux";
-import { store } from "./utils/store";
 import router from "./routes/router";
 import ProtectedRouter from "./routes/protectedRouter";
+import "./App.css";
 
-function App() {
+function App(props) {
+  const {
+    //STATE
+    getIsLoggedSelector,
+  } = props;
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-         <RouterProvider router={router}/>
+    <>
+      {!getIsLoggedSelector ? (
+        <RouterProvider router={router} />
+      ) : (
         <RouterProvider router={ProtectedRouter} />
-      </ThemeProvider>
-    </Provider>
+      )}
+    </>
   );
 }
 

@@ -134,6 +134,8 @@ function* signOutSagas() {
       // An error happened.
       console.log(error);
     });
+    
+    yield put(userActions.setIsLoggedAction(false));
 }
 
 // Watchers
