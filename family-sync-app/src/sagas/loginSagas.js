@@ -30,8 +30,8 @@ function* authSagas(payload) {
     const res = yield call(authFunction, payload.payload);
     userData.uid = res[0] && res[0].uid;
     userData.accessToken = res[0] && res[0].accessToken;
-    userData.email = res[0] && res[0].displayName;
-    userData.uid = res[0] && res[0].email;
+    userData.displayName = res[0] && res[0].displayName;
+    userData.email = res[0] && res[0].email;
     userData.photoURL = res[0] && res[0].photoURL;
 
     yield all([
