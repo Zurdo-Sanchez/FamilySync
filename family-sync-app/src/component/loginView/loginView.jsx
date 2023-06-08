@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Styles from "./loginStyles.js";
 import "./loginStyle.css";
-
 import authFunction from "../../utils/authFunction";
 
 function LoginView(props) {
@@ -17,15 +16,14 @@ function LoginView(props) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const handledDataLogin = (provider) => {
+  const handledDataLogin = async (provider) => {
     //creates data required for user login
     const dataLogin = {
       provider,
       email,
       password,
     };
-
-    authFunction(dataLogin);
+    await authAction(dataLogin);
   };
 
   const handledDataSignup = () => {
@@ -49,6 +47,12 @@ function LoginView(props) {
     <div className="container">
       <div className="formulario">
         <h1>Family Sync Login</h1>
+        <div className="recordar">
+              <button
+                className="btngoogle"
+                onClick={() => handledDataLogin("google")}
+              ></button>
+            </div>
 
         <form method="post">
           <div className="username">
