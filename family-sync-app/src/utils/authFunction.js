@@ -5,7 +5,6 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import auth from "./firebase";
-import { authAction } from "../actions/userActions";
 
 const authFunction = async (service) => {
   const email = service && service.email ? service.email : null;
@@ -45,19 +44,19 @@ const authFunction = async (service) => {
               "Error code: " + errorCode + "Error Message: " + errorMessage;
             console.log("RESPONSE LOGIN", response);
           });
-
+        break;
       case "google":
         const provider = new GoogleAuthProvider();
         await signInWithPopup(auth, provider)
           .then((result) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
+            // const credential = GoogleAuthProvider.credentialFromResult(result);
+            // const token = credential.accessToken;
             // The signed-in user info.
-            const user = result.user;
             data.push(result.user);
             // IdP data available using getAdditionalUserInfo(result)
             // ...
+            debugger;
           })
           .catch((error) => {
             // Handle Errors here.
@@ -68,11 +67,13 @@ const authFunction = async (service) => {
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
             // ...
+            data.push(errorCode, errorMessage, email, credential);
           });
         break;
+        default:
+          break;
     }
   }
-  debugger
   return data;
 };
 

@@ -1,21 +1,14 @@
 import {
   all,
   put,
-  select,
   call,
-  takeEvery,
   takeLatest,
 } from "redux-saga/effects";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
+import { signOut } from "firebase/auth";
 import auth from "../utils/firebase";
 //functions
 import authFunction from "../utils/authFunction";
+
 // Actions
 import * as userActions from "../actions/userActions";
 
@@ -26,7 +19,6 @@ import * as userActionsType from "../actions/actionsType/userActionsType";
 
 //functions
 function* authSagas(payload) {
-  const { email, password, provider } = payload.payload;
   let userData = {
     uid: "",
     accessToken: "",
@@ -35,39 +27,36 @@ function* authSagas(payload) {
     photoURL: "",
   };
   try {
-    authFunction(payload.payload)
-      .then((res) => {
-        userData.uid = res[0] && res[0].uid;
-        userData.accessToken = res[0] && res[0].accessToken;
-        userData.email = res[0] && res[0].displayName;
-        userData.uid = res[0] && res[0].email;
-        userData.photoURL = res[0] && res[0].photoURL;
-        debugger
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const res = yield call(authFunction, payload.payload);
+    userData.uid = res[0] && res[0].uid;
+    userData.accessToken = res[0] && res[0].accessToken;
+    userData.email = res[0] && res[0].displayName;
+    userData.uid = res[0] && res[0].email;
+    userData.photoURL = res[0] && res[0].photoURL;
 
     yield all([
       put(userActions.setUserAction(userData)),
       put(userActions.setIsLoggedAction(true)),
     ]);
-    debugger;
   } catch {}
 }
 
 function* signOutSagas() {
-  signOut(auth)
-    .then(() => {
-      // Sign-out successful.
-      console.log("SIGN OUT");
-    })
-    .catch((error) => {
-      // An error happened.
-      console.log(error);
-    });
-
-  yield put(userActions.setIsLoggedAction(false));
+  try {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("SIGN OUT");
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log(error);
+      });
+    yield all([
+      put(userActions.setUserAction([])),
+      put(userActions.setIsLoggedAction(false)),
+    ]);
+  } catch {}
 }
 
 // Watchers
