@@ -56,7 +56,6 @@ const authFunction = async (service) => {
             data.push(result.user);
             // IdP data available using getAdditionalUserInfo(result)
             // ...
-            debugger;
           })
           .catch((error) => {
             // Handle Errors here.
