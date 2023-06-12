@@ -1,7 +1,9 @@
 import React from "react";
-import { Button, Grid } from "@mui/material";
+import Styles from "../../styles/dashboardStyles";
+import { Grid } from "@mui/material";
 
 function DashboadView(props) {
+  const classes = Styles();
   const {
     //state
     getUserSelector,
@@ -11,8 +13,9 @@ function DashboadView(props) {
 
   return (
     <>
-      <Grid>hola! {getUserSelector.displayName}</Grid>
+    <Grid className={classes.container}>
       <button onClick={() => signOutAction()}>sign Out</button>
+    </Grid>
     </>
   );
 }
