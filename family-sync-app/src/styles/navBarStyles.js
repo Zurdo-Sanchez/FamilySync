@@ -10,7 +10,7 @@ const Styles = makeStyles((theme) => {
       backgroundColor: palette.background.navBar,
       height: pxToRem(60),
       display: "grid",
-      gridTemplateColumns: '33% 33% 33%',
+      gridTemplateColumns: "33% 33% 33%",
       alignItems: "center",
       justifyContent: "space-between",
     },
@@ -20,11 +20,11 @@ const Styles = makeStyles((theme) => {
       justifyContent: "flex-end",
     },
     nameTitle: {
-      display: 'flex',
+      display: "flex",
       color: "blue",
       fontSize: `${pxToRem(28)} !important`,
-      fontWeight: '900 !important',
-      justifyContent: 'center'
+      fontWeight: "900 !important",
+      justifyContent: "center",
     },
     containerAvatar: {
       display: "flex",
@@ -46,13 +46,19 @@ const Styles = makeStyles((theme) => {
       alignItems: "center",
       flexDirection: "column !important",
       flexWrap: "wrap",
-      margin: pxToRem(10)
+      margin: pxToRem(10),
     },
     nameAvatar: {
       color: palette.common.white,
-      fontSize: pxToRem(10),
       fontSize: `${pxToRem(10)} !important`,
-
+    },
+    avatarMenu: {
+      backdropFilter: "blur(5px)",
+    },
+    avatarMenuList: {
+      background: palette.background.main,
+      color: "white",
+      backdropFilter: "blur(5px)",
     },
     icoMenu: {
       color: palette.common.white,

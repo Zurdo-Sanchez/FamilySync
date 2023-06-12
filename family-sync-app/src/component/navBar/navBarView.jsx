@@ -1,6 +1,10 @@
-import React, { useState }from "react";
+import React, { useState } from "react";
 import Styles from "../../styles/navBarStyles";
-import { Grid, Typography, Menu, MenuItem } from "@mui/material";
+import { Grid, Typography, Menu, MenuItem, ListItemIcon } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ManageAccountsSharpIcon from "@mui/icons-material/ManageAccountsSharp";
+import SettingsSharpIcon from "@mui/icons-material/SettingsSharp";
+
 import LensBlurIcon from "@mui/icons-material/LensBlur";
 function NavBarView(props) {
   const classes = Styles();
@@ -17,7 +21,10 @@ function NavBarView(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (op) => {
+    if (op === "logOut") {
+      signOutAction();
+    }
     setAnchorEl(null);
   };
   return (
@@ -46,10 +53,27 @@ function NavBarView(props) {
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleClose}
+              classes={{ root: classes.avatarMenu }}
+              MenuListProps={{ classes: { root: classes.avatarMenuList } }}
             >
-              <MenuItem onClick={handleClose}>Opción 1</MenuItem>
-              <MenuItem onClick={handleClose}>Opción 2</MenuItem>
-              <MenuItem onClick={handleClose}>Opción 3</MenuItem>
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <ManageAccountsSharpIcon />
+                </ListItemIcon>
+                Perfil 
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <SettingsSharpIcon />
+                </ListItemIcon>
+                Opciones
+              </MenuItem>
+              <MenuItem onClick={() => handleClose("logOut")}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                Log Out
+              </MenuItem>
             </Menu>
           </Grid>
         </Grid>
