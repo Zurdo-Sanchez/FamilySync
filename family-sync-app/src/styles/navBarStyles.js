@@ -64,6 +64,9 @@ const Styles = makeStyles((theme) => {
       color: palette.common.white,
       fontSize: "50px!important",
     },
+    icoMenuList: {
+      color: palette.common.white,
+    },
   };
 });
 
