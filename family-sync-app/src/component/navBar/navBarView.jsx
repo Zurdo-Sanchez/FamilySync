@@ -58,19 +58,19 @@ function NavBarView(props) {
             >
               <MenuItem onClick={handleClose}>
                 <ListItemIcon>
-                  <ManageAccountsSharpIcon />
+                  <ManageAccountsSharpIcon className={classes.icoMenuList} />
                 </ListItemIcon>
-                Perfil 
+                Perfil
               </MenuItem>
               <MenuItem onClick={handleClose}>
                 <ListItemIcon>
-                  <SettingsSharpIcon />
+                  <SettingsSharpIcon className={classes.icoMenuList} />
                 </ListItemIcon>
                 Opciones
               </MenuItem>
               <MenuItem onClick={() => handleClose("logOut")}>
                 <ListItemIcon>
-                  <LogoutIcon />
+                  <LogoutIcon className={classes.icoMenuList} />
                 </ListItemIcon>
                 Log Out
               </MenuItem>
