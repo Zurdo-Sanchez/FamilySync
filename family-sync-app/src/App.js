@@ -1,18 +1,26 @@
 import { RouterProvider } from "react-router-dom";
-import { ThemeProvider } from "@mui/material";
-import theme from './utils/Theme';
-
+import loadable from "@loadable/component";
+import router from "./routes/router";
+import ProtectedRouter from "./routes/protectedRouter";
 import "./App.css";
-import { Provider } from "react-redux";
-import { store } from "./utils/store";
-import router from "./routes/myRouter";
-function App() {
+const NavBar = loadable(() => import("./containers/navBarContainer"));
+
+function App(props) {
+  const {
+    //STATE
+    getIsLoggedSelector,
+  } = props;
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
+    <>
+      {!getIsLoggedSelector ? (
         <RouterProvider router={router} />
-      </ThemeProvider>
-    </Provider>
+      ) : (
+        <div className="App">
+          <NavBar />
+          <RouterProvider router={ProtectedRouter} />
+        </div>
+      )}
+    </>
   );
 }
 

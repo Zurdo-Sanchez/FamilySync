@@ -3,7 +3,7 @@ import * as type from "../actions/actionsType/userActionsType";
 
 const initialState = Map({
   userData: [],
-  isLogged: null
+  isLogged: true
 });
 
 const loginReducer = (state = initialState, action) => {

@@ -1,19 +1,11 @@
-import {
-  all,
-  put,
-  select,
-  call,
-  takeEvery,
-  takeLatest,
-} from "redux-saga/effects";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
-import auth from "../utils/firebase";
+import { all, put, call, takeLatest } from "redux-saga/effects";
+import { signOut } from "firebase/auth";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+
+import fireBaseModule from "../utils/firebase";
+//functions
+import authFunction from "../utils/authFunction";
+
 // Actions
 import * as userActions from "../actions/userActions";
 
@@ -24,116 +16,60 @@ import * as userActionsType from "../actions/actionsType/userActionsType";
 
 //functions
 function* authSagas(payload) {
-  const { email, password, provider } = payload.payload;
   let userData = {
     uid: "",
+    accessToken: "",
     displayName: "",
     email: "",
     photoURL: "",
   };
   try {
-    if (provider === "signup") {
-      //create new user
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const response = userCredential.user;
+    debugger;
+    const exampleData = {
+      name: 'John Doe',
+      age: 30,
+      email: 'johndoe@example.com'
+    };
+    const collectionRef = collection(fireBaseModule.db, "users");
+   // yield call(addDoc, collectionRef, exampleData); // Agrega el dato a la colección
+    // Procesa los datos obtenidos
+    const querySnapshot = yield call(getDocs, collectionRef); // Realiza la consulta a la colección
 
-          console.log("RESPONSE", response);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const response =
-            "Error code: " + errorCode + "Error Message: " + errorMessage;
-          console.log("RESPONSE", response);
-        });
-    } else {
-      //login with diferent payload
-      switch (provider) {
-        case "email":
-          signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-              // Signed in
-              userData.uid =
-                userCredential &&
-                userCredential.user &&
-                userCredential.user.uid;
-              userData.user =
-                userCredential &&
-                userCredential.user &&
-                userCredential.user.user
-                  ? userCredential.user.displayName
-                  : null;
-              userData.email =
-                userCredential &&
-                userCredential.user &&
-                userCredential.user.email;
+    // Procesa los datos obtenidos
+    const data = querySnapshot.docs.map((doc) => doc.data());
+    debugger;
+    const res = yield call(authFunction, payload.payload);
+    userData.uid = res[0] && res[0].uid;
+    userData.accessToken = res[0] && res[0].accessToken;
+    userData.displayName = res[0] && res[0].displayName;
+    userData.email = res[0] && res[0].email;
+    userData.photoURL = res[0] && res[0].photoURL;
 
-              userData.photoURL =
-                userCredential &&
-                userCredential.user &&
-                userCredential.user.photoURL
-                  ? userCredential.user.photoURL
-                  : null;
-            })
-            .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              const response =
-                "Error code: " + errorCode + "Error Message: " + errorMessage;
-              console.log("RESPONSE LOGIN", response);
-            });
-          break;
-        case "google":
-          const provider = new GoogleAuthProvider();
-          signInWithPopup(auth, provider)
-            .then((result) => {
-              // This gives you a Google Access Token. You can use it to access the Google API.
-              const credential =
-                GoogleAuthProvider.credentialFromResult(result);
-              const token = credential.accessToken;
-              // The signed-in user info.
-              const user = result.user;
-              // IdP data available using getAdditionalUserInfo(result)
-              // ...
-              console.log("RESULT", result);
-            })
-            .catch((error) => {
-              // Handle Errors here.
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              // The email of the user's account used.
-              const email = error.customData.email;
-              // The AuthCredential type that was used.
-              const credential = GoogleAuthProvider.credentialFromError(error);
-              // ...
-              console.log("ERROR LOGIN GOOGLE");
-              console.log("ERROR CODE", errorCode);
-              console.log("ERROR MESSAGE", errorMessage);
-              console.log("ERROR EMAIL", email);
-              console.log("ERROR CREDENTIAL", credential);
-            });
-          break;
-      }
-    }
     yield all([
       put(userActions.setUserAction(userData)),
-      put(userActions.setIsLoggedAction(true))
+      put(userActions.setIsLoggedAction(true)),
     ]);
-  } catch {}
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 function* signOutSagas() {
-  signOut(auth)
-    .then(() => {
-      // Sign-out successful.
-      console.log("SIGN OUT");
-    })
-    .catch((error) => {
-      // An error happened.
-      console.log(error);
-    });
+  try {
+    signOut(fireBaseModule.auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("SIGN OUT");
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log(error);
+      });
+    yield all([
+      put(userActions.setUserAction([])),
+      put(userActions.setIsLoggedAction(false)),
+    ]);
+  } catch {}
 }
 
 // Watchers

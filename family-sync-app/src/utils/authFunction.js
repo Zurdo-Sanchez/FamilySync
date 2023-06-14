@@ -4,11 +4,13 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import auth from "./firebase";
-function authFunction(service) {
+import fireBaseModule from "./firebase";
+
+const authFunction = async (service) => {
+const auth = fireBaseModule.auth;
   const email = service && service.email ? service.email : null;
   const password = service && service.password ? service.password : null;
-
+  const data = [];
   console.log("SERVICE", service);
 
   if (service && service.provider === "signup") {
@@ -43,17 +45,16 @@ function authFunction(service) {
               "Error code: " + errorCode + "Error Message: " + errorMessage;
             console.log("RESPONSE LOGIN", response);
           });
-
+        break;
       case "google":
-        
-      const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(auth, provider)
           .then((result) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
+            // const credential = GoogleAuthProvider.credentialFromResult(result);
+            // const token = credential.accessToken;
             // The signed-in user info.
-            const user = result.user;
+            data.push(result.user);
             // IdP data available using getAdditionalUserInfo(result)
             // ...
           })
@@ -66,10 +67,14 @@ function authFunction(service) {
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
             // ...
+            data.push(errorCode, errorMessage, email, credential);
           });
         break;
+        default:
+          break;
     }
   }
-}
+  return data;
+};
 
 export default authFunction;
