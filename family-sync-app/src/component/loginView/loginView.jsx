@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Styles from "./loginStyles.js";
+import Styles from "../../styles/loginStyles.js";
 import "./loginStyle.css";
+
+import { Grid, Input } from "@mui/material";
+
 import authFunction from "../../utils/authFunction";
+import GoogleIcon from "../../utils/media/google.png";
 
 function LoginView(props) {
   const classes = Styles();
@@ -47,13 +51,6 @@ function LoginView(props) {
     <div className="container">
       <div className="formulario">
         <h1>Family Sync Login</h1>
-        <div className="recordar">
-              <button
-                className="btngoogle"
-                onClick={() => handledDataLogin("google")}
-              ></button>
-            </div>
-
         <form method="post">
           <div className="username">
             <input
@@ -94,12 +91,21 @@ function LoginView(props) {
                 onClick={() => handledDataLogin("email")}
               ></button>
             </div>
-            <div className="recordar">
+            {/* /////// ESte se Reemplaza por el Grid///// */}
+            {/* <div className="recordar">
               <button
                 className="btngoogle"
                 onClick={() => handledDataLogin("google")}
               ></button>
-            </div>
+            </div> */}
+            <Grid>
+              <img
+                className={classes.googleIcon}
+                src={GoogleIcon}
+                onClick={() => handledDataLogin("google")}
+              />
+            </Grid>
+            {/* /////////////////////////////////////////////////////////// */}
 
             <div className="recordar">
               <button

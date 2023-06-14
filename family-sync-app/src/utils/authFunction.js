@@ -4,9 +4,10 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import auth from "./firebase";
+import fireBaseModule from "./firebase";
 
 const authFunction = async (service) => {
+const auth = fireBaseModule.auth;
   const email = service && service.email ? service.email : null;
   const password = service && service.password ? service.password : null;
   const data = [];
