@@ -1,11 +1,8 @@
-import {
-  all,
-  put,
-  call,
-  takeLatest,
-} from "redux-saga/effects";
+import { all, put, call, takeLatest } from "redux-saga/effects";
 import { signOut } from "firebase/auth";
-import auth from "../utils/firebase";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+
+import fireBaseModule from "../utils/firebase";
 //functions
 import authFunction from "../utils/authFunction";
 
@@ -27,6 +24,20 @@ function* authSagas(payload) {
     photoURL: "",
   };
   try {
+    debugger;
+    const exampleData = {
+      name: 'John Doe',
+      age: 30,
+      email: 'johndoe@example.com'
+    };
+    const collectionRef = collection(fireBaseModule.db, "users");
+   // yield call(addDoc, collectionRef, exampleData); // Agrega el dato a la colección
+    // Procesa los datos obtenidos
+    const querySnapshot = yield call(getDocs, collectionRef); // Realiza la consulta a la colección
+
+    // Procesa los datos obtenidos
+    const data = querySnapshot.docs.map((doc) => doc.data());
+    debugger;
     const res = yield call(authFunction, payload.payload);
     userData.uid = res[0] && res[0].uid;
     userData.accessToken = res[0] && res[0].accessToken;
@@ -38,12 +49,14 @@ function* authSagas(payload) {
       put(userActions.setUserAction(userData)),
       put(userActions.setIsLoggedAction(true)),
     ]);
-  } catch {}
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 function* signOutSagas() {
   try {
-    signOut(auth)
+    signOut(fireBaseModule.auth)
       .then(() => {
         // Sign-out successful.
         console.log("SIGN OUT");
