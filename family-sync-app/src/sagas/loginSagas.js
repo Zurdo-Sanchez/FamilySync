@@ -24,20 +24,18 @@ function* authSagas(payload) {
     photoURL: "",
   };
   try {
-    debugger;
     const exampleData = {
-      name: 'John Doe',
+      name: "John Doe",
       age: 30,
-      email: 'johndoe@example.com'
+      email: "johndoe@example.com",
     };
     const collectionRef = collection(fireBaseModule.db, "users");
-   // yield call(addDoc, collectionRef, exampleData); // Agrega el dato a la colección
+    // yield call(addDoc, collectionRef, exampleData); // Agrega el dato a la colección
     // Procesa los datos obtenidos
     const querySnapshot = yield call(getDocs, collectionRef); // Realiza la consulta a la colección
 
     // Procesa los datos obtenidos
     const data = querySnapshot.docs.map((doc) => doc.data());
-    debugger;
     const res = yield call(authFunction, payload.payload);
     userData.uid = res[0] && res[0].uid;
     userData.accessToken = res[0] && res[0].accessToken;
