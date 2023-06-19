@@ -1,33 +1,70 @@
-import { all, put, call, takeLatest } from "redux-saga/effects";
+import { all, put, call, takeLatest, select } from "redux-saga/effects";
 import { signOut } from "firebase/auth";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 
 import fireBaseModule from "../utils/firebase";
 //functions
 
 // Actions
-import * as dataAccountantActions from "../actions/dataAccountantActions";
+import * as accountantActions from "../actions/accountantActions";
 
 //ACTIONTYPES
-import * as dataAcountantActionsType from "../actions/actionsType/dataAccountantActionsType";
+import * as acountantActionsType from "../actions/actionsType/accountantActionsType";
 
 // Selectors
-
+import { getCategory } from "../selectors/accountantSelector";
+import { getUserSelector } from "../selectors/loginSelector";
 //functions
+function* getDBCategoriesSagas() {
+  try {
+    const categories = [];
+    const user = yield select(getUserSelector);
+    const collectionRef = collection(fireBaseModule.db, "categories");
+    const querySnapshot = yield call(getDocs, query(collectionRef, where( 'userId' == user.uid) )); // Realiza la consulta a la colección
+    const data = querySnapshot.docs.map((doc) => doc.data());
+
+    data.map((data) => {
+      categories.push(data.name);
+    });
+    yield all([put(accountantActions.setCategory(categories))]);
+  } catch {}
+}
+
 function* addCategory(payload) {
-  try{
-    console.log(addCategory);
-  }
-   catch {}
+  try {
+    const newCategory = payload.value;
+    const categories = yield select(getCategory);
+    const user = yield select(getUserSelector);
+
+    debugger;
+    const data = {
+      userId: user.uid,
+      name: newCategory,
+    };
+    if (newCategory) {
+      const collectionRef = collection(fireBaseModule.db, "categories");
+      yield call(addDoc, collectionRef, data); // Agrega el dato a la colección
+      categories.push(newCategory);
+    }
+    console.log("addCategory", categories);
+    yield all([put(accountantActions.setCategory(categories))]);
+  } catch {}
 }
 
 // Watchers
+function* getDBCategorySagasWatcher() {
+  yield takeLatest(
+    acountantActionsType.GET_DB_CATEGORY_ACTION,
+    getDBCategoriesSagas
+  );
+}
+
 function* addCategorySagasWatcher() {
-  yield takeLatest(dataAcountantActionsType.ADD_CATEGORY_ACTION, addCategory);
+  yield takeLatest(acountantActionsType.ADD_CATEGORY_ACTION, addCategory);
 }
 
 //exports
 
 export default function* sagas() {
-  yield all([addCategorySagasWatcher()]);
+  yield all([addCategorySagasWatcher(), getDBCategorySagasWatcher()]);
 }

@@ -8,7 +8,12 @@ const Accountant = loadable(() => import("../containers/accountantContainer"));
 const protectedRouter = createBrowserRouter([
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <>
+        <NavBar />
+        <Dashboard />
+      </>
+    ),
     errorElement: <ErrorPage />,
   },
   {
@@ -16,7 +21,7 @@ const protectedRouter = createBrowserRouter([
     element: (
       <>
         <NavBar />
-        <Dashboard />
+        <Accountant />
       </>
     ),
     errorElement: <ErrorPage />,
