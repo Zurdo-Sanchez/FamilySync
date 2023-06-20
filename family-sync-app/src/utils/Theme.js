@@ -2,23 +2,39 @@ import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
-    common:{
-      white:'#FFFFFF',
-      black:'#000'
+    primary: {
+      main: "#c0cfc0",
     },
-    background:{
+    secondary: {
+      main: "#aa6a54",
+    },
+    common: {
+      white: "#FFFFFF",
+      black: "#000",
+    },
+    background: {
       main: "linear-gradient(150deg, #6c3483, #58d68d)",
-      navBar: '#000'
+      navBar: "#000",
     },
     button: {
       primary: "#FFFFF",
-      border: '#FFFFF'
+      border: "#FFFFF",
     },
   },
+
   typography: {
-    fontFamily:'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+    fontFamily:
+      'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
     fontWeightRegular: "400",
     pxToRem: (size) => `${size / 16}rem`,
+  },
+
+  textColor: {
+    primary: "rgba(0, 0, 0, 0.87)",
+
+    secondary: "rgba(0, 0, 0, 0.6)",
+
+    disabled: "rgba(0, 0, 0, 0.38)",
   },
   breakpoints: {
     values: {
