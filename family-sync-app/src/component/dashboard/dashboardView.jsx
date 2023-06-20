@@ -2,6 +2,7 @@ import React from "react";
 import Styles from "../../styles/dashboardStyles";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import LeftNavBarDashboardContainer from "../../containers/leftNavBarDashboardContainer";
 
 function DashboadView(props) {
   const classes = Styles();
@@ -15,9 +16,13 @@ function DashboadView(props) {
   } = props;
 
   return (
+    <Grid className={classes.root}>
+      <LeftNavBarDashboardContainer/>
     <Grid className={classes.container}>
       <button onClick={() => signOutAction()}>sign Out</button>
       <button onClick={() => navigate("/accountant")}>AccountantView</button>
+    </Grid>
+
     </Grid>
   );
 }

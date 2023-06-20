@@ -4,7 +4,13 @@ const Styles = makeStyles((theme) => {
   const { typography, palette } = theme;
   const { pxToRem } = typography;
   return {
+    root:{
+      display: 'flex',
+      height: '93vh'
+    },
     container: {
+      height: '93vh',
+      width: '100%',
       margin: pxToRem(0),
       padding: pxToRem(0),
       background: palette.background.main,
