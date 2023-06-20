@@ -14,6 +14,17 @@ const Styles = makeStyles((theme) => {
       width: pxToRem(50),
       height: pxToRem(50),
     },
+    customTypography: {
+      color: theme.palette.secondary.main, // Cambia "blue" al color deseado
+    },
+
+    blockLogin: {
+      backgroundColor: "white",
+    },
+
+    paperLogin: {
+      backgroundColor: theme.palette.primary.main, // Cambia "blue" al color deseado
+    },
   };
 });
 
