@@ -8,7 +8,7 @@ const Styles = makeStyles((theme) => {
       margin: pxToRem(0),
       padding: pxToRem(0),
       backgroundColor: palette.background.navBar,
-      height: pxToRem(60),
+      height: '7vh',
       display: "grid",
       gridTemplateColumns: "33% 33% 33%",
       alignItems: "center",

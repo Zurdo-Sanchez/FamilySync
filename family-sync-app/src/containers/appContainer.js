@@ -5,14 +5,16 @@ import { getIsLoggedSelector } from "../selectors/loginSelector";
 
 // Functions
 import { signOutAction } from "../actions/userActions";
+import { getDBCategory } from "../actions/accountantActions";
 
 const mapStateToProps = (state) => ({
-    getIsLoggedSelector: getIsLoggedSelector(state),
+  getIsLoggedSelector: getIsLoggedSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     signOutAction: (payload) => dispatch(signOutAction(payload)),
+    getDBCategory: (payload) => dispatch(getDBCategory(payload)),
   };
 };
 

@@ -3,11 +3,10 @@ import * as type from "../actions/actionsType/userActionsType";
 
 const initialState = Map({
   userData: [],
-  isLogged: true
+  isLogged: false
 });
 
 const loginReducer = (state = initialState, action) => {
-  console.log("ACTION", action);
   switch (action.type) {
     case type.SET_USER_ACTION:
       return state.set("userData", action.payload);

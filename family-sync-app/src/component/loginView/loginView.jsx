@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Styles from "../../styles/loginStyles.js";
-import "./loginStyle.css";
 
-import { Grid, Input } from "@mui/material";
+import MailIcon from "@mui/icons-material/Mail";
+// import GoogleIcon from "@mui/icons-material/Google";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import FacebookIcon from "@mui/icons-material/Facebook";
+
+import { Button, Grid, Input } from "@mui/material";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 
 import authFunction from "../../utils/authFunction";
 import GoogleIcon from "../../utils/media/google.png";
@@ -48,56 +57,86 @@ function LoginView(props) {
   }, [getIsLoggedSelector]);
 
   return (
-    <div className="container">
-      <div className="formulario">
-        <h1>Family Sync Login</h1>
-        <form method="post">
-          <div className="username">
-            <input
-              type="text"
+    <Grid
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        height: "100vh",
+        backgroundColor: "#c0cfc0",
+      }}
+    >
+      <Paper
+        className={classes.paperLogin}
+        style={{ width: 400, height: 450 }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 2,
+          overflow: "hidden",
+          mt: 5,
+        }}
+      >
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: "grid",
+            gap: 2,
+          }}
+        >
+          <Typography variant="h3" className={classes.customTypography}>
+            Family Sync Login
+          </Typography>
+
+          <Grid className="blockLogin">
+            <Typography>Nombre</Typography>
+
+            <TextField
+              gap="4"
               required
+              id="outlined-required"
+              label="Required"
+              type="text"
               onChange={(e) => {
                 setEmail(e.currentTarget.value);
               }}
             />
-            <label>User Name</label>
-          </div>
-          <div class="username">
-            <input
-              type="password"
+          </Grid>
+
+          <Grid>
+            <Typography>Password</Typography>
+
+            <TextField
               required
+              id="outlined-required"
+              label="Required"
+              type="password"
               onChange={(e) => {
                 setPassword(e.currentTarget.value);
               }}
             />
-            <label>Password</label>
-          </div>
-          <div className="recordar">¿Forgot your Password?</div>
-          <div>
-            <input
-              className={classes.button}
-              type="submit"
-              value="Sign Up"
-            ></input>
-          </div>
-          <div className="registrarse">
-            I Want To <a href="#">Register</a>
-          </div>
+          </Grid>
 
-          <div class="init">
-            <div className="recordar">
-              <button
-                class="btnmail"
+          <Box style={{ display: "flex", justifyContent: "space-between" }}>
+            <Button variant="contained">¿Forgot your Password?</Button>
+
+            <Button variant="contained">Sign Up</Button>
+          </Box>
+
+          <Grid>
+            <Typography variant="h6">
+              I Want To <Button variant="contained">Register</Button>
+            </Typography>
+          </Grid>
+
+          <Box style={{ display: "flex", justifyContent: "space-between" }}>
+            <Grid>
+              <img
+                className={classes.googleIcon}
+                src={GoogleIcon}
                 onClick={() => handledDataLogin("email")}
-              ></button>
-            </div>
-            {/* /////// ESte se Reemplaza por el Grid///// */}
-            {/* <div className="recordar">
-              <button
-                className="btngoogle"
-                onClick={() => handledDataLogin("google")}
-              ></button>
-            </div> */}
+              />
+            </Grid>
             <Grid>
               <img
                 className={classes.googleIcon}
@@ -105,18 +144,17 @@ function LoginView(props) {
                 onClick={() => handledDataLogin("google")}
               />
             </Grid>
-            {/* /////////////////////////////////////////////////////////// */}
-
-            <div className="recordar">
-              <button
-                className="btngit"
-                onClick={() => handledDataSignup()}
-              ></button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+            <Grid>
+              <img
+                className={classes.googleIcon}
+                src={GoogleIcon}
+                onClick={() => handledDataLogin("google")}
+              />
+            </Grid>
+          </Box>
+        </Box>
+      </Paper>
+    </Grid>
   );
 }
 

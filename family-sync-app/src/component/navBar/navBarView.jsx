@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Styles from "../../styles/navBarStyles";
 import { Grid, Typography, Menu, MenuItem, ListItemIcon } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -7,6 +8,7 @@ import SettingsSharpIcon from "@mui/icons-material/SettingsSharp";
 
 import LensBlurIcon from "@mui/icons-material/LensBlur";
 function NavBarView(props) {
+  const navigate = useNavigate();
   const classes = Styles();
   const {
     //state
@@ -31,7 +33,7 @@ function NavBarView(props) {
     <>
       <Grid className={classes.container}>
         {/* <button onClick={() => signOutAction()}>sign Out</button> */}
-        <LensBlurIcon className={classes.icoMenu} />
+        <LensBlurIcon className={classes.icoMenu} onClick={() => {navigate("/dashboard")}} />
         <Typography className={classes.nameTitle}>FAMILY SYNCY</Typography>
         <Grid className={classes.userData}>
           <Grid className={classes.nameContainer}>
