@@ -1,5 +1,4 @@
 import { all, put, call, takeLatest, select } from "redux-saga/effects";
-import { signOut } from "firebase/auth";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 
 import fireBaseModule from "../utils/firebase";
@@ -16,18 +15,25 @@ import { getCategory } from "../selectors/accountantSelector";
 import { getUserSelector } from "../selectors/loginSelector";
 //functions
 function* getDBCategoriesSagas() {
-  try {
-    const categories = [];
-    const user = yield select(getUserSelector);
-    const collectionRef = collection(fireBaseModule.db, "categories");
-    const querySnapshot = yield call(getDocs, query(collectionRef, where( 'userId' == user.uid) )); // Realiza la consulta a la colección
-    const data = querySnapshot.docs.map((doc) => doc.data());
+try {
+  const categories = [];
+  const user = yield select(getUserSelector);
+  const collectionRef = collection(fireBaseModule.db, "categories");
+  const querySnapshot = yield call(
+    getDocs,
+    query(collectionRef, where("userId", "==", user.uid))
+  );
+  const data = querySnapshot.docs.map((doc) => doc.data());
 
-    data.map((data) => {
-      categories.push(data.name);
-    });
-    yield all([put(accountantActions.setCategory(categories))]);
-  } catch {}
+  data.map((data) => {
+    categories.push(data.name);
+  });
+
+  yield put(accountantActions.setCategory(categories));
+} catch (error) {
+  // Manejar el error aquí
+  console.log("Error en getDBCategoriesSagas:", error);
+}
 }
 
 function* addCategory(payload) {
