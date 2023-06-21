@@ -4,6 +4,9 @@ const Styles = makeStyles((theme) => {
   const { typography, palette } = theme;
   const { pxToRem } = typography;
   return {
+    root:{
+      display:'Flex'
+    },
     container: {
       margin: pxToRem(0),
       padding: pxToRem(0),
