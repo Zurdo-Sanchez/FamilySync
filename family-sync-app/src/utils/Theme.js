@@ -45,6 +45,10 @@ const theme = createTheme({
       xl: 1680,
     },
   },
+
+  spaces: {
+    spacing: 4, // Ajusta el valor del espaciado según tus necesidades
+  },
 });
 
 export default theme;
