@@ -11,8 +11,6 @@ const auth = fireBaseModule.auth;
   const email = service && service.email ? service.email : null;
   const password = service && service.password ? service.password : null;
   const data = [];
-  console.log("SERVICE", service);
-
   if (service && service.provider === "signup") {
     //create new user
     createUserWithEmailAndPassword(auth, email, password)

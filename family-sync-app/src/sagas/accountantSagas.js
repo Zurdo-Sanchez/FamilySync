@@ -6,6 +6,7 @@ import fireBaseModule from "../utils/firebase";
 
 // Actions
 import * as accountantActions from "../actions/accountantActions";
+import * as notificationActions from "../actions/notificationActions";
 
 //ACTIONTYPES
 import * as acountantActionsType from "../actions/actionsType/accountantActionsType";
@@ -15,25 +16,26 @@ import { getCategory } from "../selectors/accountantSelector";
 import { getUserSelector } from "../selectors/loginSelector";
 //functions
 function* getDBCategoriesSagas() {
-try {
-  const categories = [];
-  const user = yield select(getUserSelector);
-  const collectionRef = collection(fireBaseModule.db, "categories");
-  const querySnapshot = yield call(
-    getDocs,
-    query(collectionRef, where("userId", "==", user.uid))
-  );
-  const data = querySnapshot.docs.map((doc) => doc.data());
+  try {
+    const categories = [];
+    const user = yield select(getUserSelector);
+    const collectionRef = collection(fireBaseModule.db, "categories");
+    const querySnapshot = yield call(
+      getDocs,
+      query(collectionRef, where("userId", "==", user.uid))
+    );
+    const data = querySnapshot.docs.map((doc) => doc.data());
 
-  data.map((data) => {
-    categories.push(data.name);
-  });
+    data.map((data) => {
+      categories.push(data.name);
+    });
 
-  yield put(accountantActions.setCategory(categories));
-} catch (error) {
-  // Manejar el error aquí
-  console.log("Error en getDBCategoriesSagas:", error);
-}
+    yield put(accountantActions.setCategory(categories));
+  } catch (error) {
+    // Manejar el error aquí
+    put(notificationActions.setNotificationMessage({message: `Error en getDBCategoriesSagas`, type: 'error'})),
+    console.log("Error en getDBCategoriesSagas:", error);
+  }
 }
 
 function* addCategory(payload) {
@@ -42,7 +44,6 @@ function* addCategory(payload) {
     const categories = yield select(getCategory);
     const user = yield select(getUserSelector);
 
-    debugger;
     const data = {
       userId: user.uid,
       name: newCategory,
@@ -52,8 +53,10 @@ function* addCategory(payload) {
       yield call(addDoc, collectionRef, data); // Agrega el dato a la colección
       categories.push(newCategory);
     }
-    console.log("addCategory", categories);
-    yield all([put(accountantActions.setCategory(categories))]);
+    yield all([
+      put(accountantActions.setCategory(categories)),
+      put(notificationActions.setNotificationMessage({message: `Categoria ${newCategory} agregada`, type: 'success'})),
+    ]);
   } catch {}
 }
 

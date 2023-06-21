@@ -10,18 +10,9 @@ const Styles = makeStyles((theme) => {
       padding: pxToRem(0),
       background: palette.background.navBar,
       display: "grid",
-      gridTemplateRows: `${pxToRem(50)} 1fr ${pxToRem(30)}`,
+      gridTemplateRows: `${pxToRem(50)} 1fr ${pxToRem(30)}`
     },
-    backdrop: {
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      filter: "blur(8px)",
-    },
-    title: {
+    title:{
       fontSize: `${pxToRem(30)} !important`,
       color: palette.common.white,
     },
@@ -36,12 +27,12 @@ const Styles = makeStyles((theme) => {
     },
     Type: {
       height: pxToRem(40),
-      width: "100%",
+      width: '100%',
       color: palette.common.white,
-      display: "flex",
+      display: 'flex',
       textAlign: "center",
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
       paddingLeft: pxToRem(5),
       fontSize: `${pxToRem(13)} !important`,
     },
