@@ -13,10 +13,20 @@ import {
 
 import Styles from "../../styles/leftNavBarAccountantStyles";
 
-function LeftNavBarAccountantView() {
+function LeftNavBarAccountantView(props) {
   const classes = Styles();
+  const {
+    //state
+    getCategory,
+    //actions
+    addCategory,
+
+    categories,
+    setCategories,
+  } = props;
   const maxCharacterLength = 10;
   const minCharacterLength = 3;
+  // const [categories, setCategories] = useState(getCategory);
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [group, setGroup] = useState(false);
@@ -40,12 +50,48 @@ function LeftNavBarAccountantView() {
     setShowInputPopover(true);
   };
 
-  const handleButtonSubmit = () => {
-    // Lógica para manejar el botón de enviar aquí
-    console.log("Input:", inputValue);
-    console.log("group:", group);
-    setInputValue("");
-    handleClose();
+  const handledAddCategory = () => {
+    if (
+      validateInput(inputValue, 3, 10) &&
+      checkIfTheCategoryNoExists(inputValue)
+    ) {
+      const updatedCategories = [...categories, inputValue]; // Crea una nueva matriz con el nuevo registro agregado al final
+      setCategories(updatedCategories); // Actualiza el estado de categories con la nueva matriz de categorías
+      addCategory(inputValue);
+      setInputValue("");
+      handleClose();
+    }
+  };
+  const validateInput = (value, minLong, maxLong) => {
+    if (!value) {
+      console.log("El input no puede estar vacío");
+      return false;
+    }
+    // Verificar si el input tiene caracteres especiales
+    const specialCharsRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/;
+    const hasSpecialChars = specialCharsRegex.test(value);
+    // Verificar si el input tiene la cantidad de digitos aceptada
+    const longMaxAccepted = value && value.length > maxLong;
+    const longMinAccepted = value && value.length < minLong;
+    // Validar el resultado de ambas verificaciones
+    if (hasSpecialChars) {
+      console.log("El input contiene caracteres especiales");
+      return false;
+    } else if (longMinAccepted) {
+      console.log(`El input tiene menos de ${minLong} dígitos`);
+      return false;
+    } else if (longMaxAccepted) {
+      console.log(`El input tiene más de ${maxLong} dígitos`);
+      return false;
+    } else {
+      console.log("El input es válido");
+      return true;
+    }
+  };
+  const checkIfTheCategoryNoExists = (category) => {
+    const isCategoryNoExists = !categories.includes(category); // verifica que no este la categori ene l arreglo
+    console.log("no existe", isCategoryNoExists);
+    return isCategoryNoExists;
   };
 
   const open = Boolean(anchorEl);
@@ -115,9 +161,10 @@ function LeftNavBarAccountantView() {
                 ),
               }}
             />
-            { inputValue.length < minCharacterLength && <Typography>debe poseer minimo {minCharacterLength} caracteres</Typography>
-            }
-            <Button onClick={handleButtonSubmit}>Agregar</Button>
+            {inputValue.length < minCharacterLength && (
+              <Typography>minimo {minCharacterLength} caracteres</Typography>
+            )}
+            <Button onClick={() => handledAddCategory()}>Agregar</Button>
           </Box>
         </Popover>
       </Grid>

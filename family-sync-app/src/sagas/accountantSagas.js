@@ -42,7 +42,6 @@ function* addCategory(payload) {
     const categories = yield select(getCategory);
     const user = yield select(getUserSelector);
 
-    debugger;
     const data = {
       userId: user.uid,
       name: newCategory,
