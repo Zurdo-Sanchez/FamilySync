@@ -26,7 +26,6 @@ function LeftNavBarAccountantView(props) {
   } = props;
   const maxCharacterLength = 10;
   const minCharacterLength = 3;
-  // const [categories, setCategories] = useState(getCategory);
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [group, setGroup] = useState(false);
