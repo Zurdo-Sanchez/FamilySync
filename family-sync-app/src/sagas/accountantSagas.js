@@ -33,7 +33,14 @@ function* getDBCategoriesSagas() {
     yield put(accountantActions.setCategory(categories));
   } catch (error) {
     // Manejar el error aquí
-    put(notificationActions.setNotificationMessage({message: `Error en getDBCategoriesSagas`, type: 'error'})),
+    yield;
+    put(
+      notificationActions.setNotificationMessage({
+        message: `Error en getDBCategoriesSagas`,
+        type: "error",
+      })
+    );
+
     console.log("Error en getDBCategoriesSagas:", error);
   }
 }
@@ -55,7 +62,12 @@ function* addCategory(payload) {
     }
     yield all([
       put(accountantActions.setCategory(categories)),
-      put(notificationActions.setNotificationMessage({message: `Categoria ${newCategory} agregada`, type: 'success'})),
+      put(
+        notificationActions.setNotificationMessage({
+          message: `Categoria ${newCategory} agregada`,
+          type: "success",
+        })
+      ),
     ]);
   } catch {}
 }
