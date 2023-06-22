@@ -27,7 +27,9 @@ function App(props) {
 
   return (
     <>
-      {showNotification && <Notification />}
+      {showNotification && <Notification
+      setShowNotification={setShowNotification}
+      />}
       {!getIsLoggedSelector ? (
         <RouterProvider router={router} />
       ) : (

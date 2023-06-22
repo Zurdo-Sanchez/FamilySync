@@ -2,13 +2,13 @@ import { Map } from "immutable";
 import * as type from "../actions/actionsType/notificationActionsType";
 
 const initialState = Map({
-  message: null,
+  notificationData: false,
 });
 
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
      case type.SET_MESSAGE_ACTION:
-       return state.set("message", action.value );
+       return state.set("notificationData", action.value );
     default:
       return state;
   }

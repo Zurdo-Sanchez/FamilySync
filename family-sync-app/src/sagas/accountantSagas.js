@@ -26,15 +26,12 @@ function* getDBCategoriesSagas() {
     );
     const data = querySnapshot.docs.map((doc) => doc.data());
 
-    data.map((data) => {
-      categories.push(data.name);
-    });
+    data.map((data) => categories.push(data.name));
 
     yield put(accountantActions.setCategory(categories));
   } catch (error) {
     // Manejar el error aquí
-    yield;
-    put(
+    yield put(
       notificationActions.setNotificationMessage({
         message: `Error en getDBCategoriesSagas`,
         type: "error",
