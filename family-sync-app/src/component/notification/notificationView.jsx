@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Snackbar,
-  SnackbarContent,
-  IconButton,
-} from "@mui/material";
+import { Snackbar, SnackbarContent, IconButton } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import Styles from "../../styles/notificationStyles";
 
-//const Notification = ({ message, type, duration, onClose }) => {
 const Notification = (props) => {
   const classes = Styles();
   const [open, setOpen] = useState(false);
@@ -17,10 +12,17 @@ const Notification = (props) => {
     getNotificationMessage,
     //ACTIONS
     setNotificationMessage,
+    setShowNotification,
   } = props;
-  const message = getNotificationMessage && getNotificationMessage.message ? getNotificationMessage.message : null;
+  const message =
+    getNotificationMessage && getNotificationMessage.message
+      ? getNotificationMessage.message
+      : null;
   const duration = 3000;
-  const type = getNotificationMessage && getNotificationMessage.type ? getNotificationMessage.type: null;
+  const type =
+    getNotificationMessage && getNotificationMessage.type
+      ? getNotificationMessage.type
+      : null;
   useEffect(() => {
     setOpen(true);
 
@@ -32,7 +34,8 @@ const Notification = (props) => {
   }, []);
 
   const handleClose = () => {
-    setNotificationMessage(null);
+    setShowNotification(false);
+    setNotificationMessage(false);
     setOpen(false);
   };
 
