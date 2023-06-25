@@ -18,7 +18,6 @@ function App(props) {
 
   useEffect(() => {
     if (getNotificationMessage) setShowNotification(getNotificationMessage);
-    console.log(getNotificationMessage);
   }, [getNotificationMessage, showNotification]);
 
   useEffect(() => {
@@ -27,9 +26,9 @@ function App(props) {
 
   return (
     <>
-      {showNotification && <Notification
-      setShowNotification={setShowNotification}
-      />}
+      {showNotification && (
+        <Notification setShowNotification={setShowNotification} />
+      )}
       {!getIsLoggedSelector ? (
         <RouterProvider router={router} />
       ) : (
