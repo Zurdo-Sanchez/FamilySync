@@ -1,0 +1,1 @@
+export const SET_MESSAGE_ACTION = 'SET_MESSAGE_ACTION'

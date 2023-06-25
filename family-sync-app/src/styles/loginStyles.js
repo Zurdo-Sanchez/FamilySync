@@ -1,29 +1,33 @@
-import { makeStyles } from "@mui/styles";
+import { makeStyles, Avatar } from "@mui/styles";
 
 const Styles = makeStyles((theme) => {
   const { typography, palette } = theme;
   const { pxToRem } = typography;
+
   return {
-    container: {
-      margin: "0",
-      padding: "0",
-      background: "linear-gradient(150deg, #6c3483, #58d68d)",
+    gridMain: {
+      backgroundColor: theme.palette.primary.main,
+      display: "flex",
+      padding: 0,
+      margin: 0,
       height: "100vh",
     },
-    googleIcon: {
-      width: pxToRem(50),
-      height: pxToRem(50),
-    },
-    customTypography: {
-      color: theme.palette.secondary.main, // Cambia "blue" al color deseado
+
+    paperStyle: {
+      width: 280,
+      height: 500,
+      margin: "30px auto",
+      padding: pxToRem(20),
+      borderRadius: pxToRem(10),
     },
 
-    blockLogin: {
-      backgroundColor: "white",
+    signBtnStyle: {
+      color: theme.palette.secondary.main,
+      margin: "8px 0",
     },
 
-    paperLogin: {
-      backgroundColor: theme.palette.primary.main, // Cambia "blue" al color deseado
+    titleH2: {
+      color: palette.dark.main,
     },
   };
 });

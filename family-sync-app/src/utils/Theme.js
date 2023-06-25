@@ -8,6 +8,10 @@ const theme = createTheme({
     secondary: {
       main: "#aa6a54",
     },
+
+    dark: {
+      main: "#869086",
+    },
     common: {
       white: "#FFFFFF",
       black: "#000",
@@ -44,6 +48,10 @@ const theme = createTheme({
       lg: 1366,
       xl: 1680,
     },
+  },
+
+  spaces: {
+    spacing: 4, // Ajusta el valor del espaciado según tus necesidades
   },
 });
 
