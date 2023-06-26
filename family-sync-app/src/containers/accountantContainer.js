@@ -1,17 +1,18 @@
 import { connect } from "react-redux";
 import AccountantView from "../component/accountant/accountantView";
 // States
-import { getCategory } from "../selectors/accountantSelector";
+import { getCategory, loading  } from "../selectors/accountantSelector";
 // Functions
-import { addCategory } from "../actions/accountantActions";
+import { deleteCategory } from "../actions/accountantActions";
 
 const mapStateToProps = (state) => ({
   getCategory: getCategory(state),
+  loading: loading(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addCategory: (payload) => dispatch(addCategory(payload)),
+    deleteCategory: (payload) => dispatch(deleteCategory(payload)),
   };
 };
 

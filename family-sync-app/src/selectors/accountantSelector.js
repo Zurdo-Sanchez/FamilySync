@@ -5,4 +5,5 @@ function getState(state) {
 }
 
 export const getCategory = (state) => getState(state).get('category');
+export const loading = (state) => getState(state).get('loading');
 

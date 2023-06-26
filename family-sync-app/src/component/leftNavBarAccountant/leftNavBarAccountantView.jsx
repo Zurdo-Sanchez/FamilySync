@@ -50,8 +50,6 @@ function LeftNavBarAccountantView(props) {
   };
 
   const handledAddCategory = () => {
-    const updatedCategories = [...categories, inputValue]; // Crea una nueva matriz con el nuevo registro agregado al final
-    setCategories(updatedCategories); // Actualiza el estado de categories con la nueva matriz de categorías
     addCategory(inputValue);
     setInputValue("");
     handleClose();
