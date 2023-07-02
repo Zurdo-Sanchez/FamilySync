@@ -64,7 +64,11 @@ function* addCategorySagas(payload) {
   try {
     yield put(accountantActions.setLoading(true));
 
-    const newCategory = payload.value;
+    const newCategory = payload.value.replace(
+      /\b\w+/g,
+      (match) => match.charAt(0).toUpperCase() + match.slice(1).toLowerCase()
+    );
+
     const categories = yield select(getCategory);
     const user = yield select(getUserSelector);
     const maxLong = 10;
@@ -130,11 +134,11 @@ function* addCategorySagas(payload) {
         validateInput = true;
       }
     }
-    if (categories.includes(newCategory)) {
+    if (categories.some((category) => category.name === newCategory)) {
       yield all([
         put(
           notificationActions.setNotificationMessage({
-            message: `La categoria ${newCategory} ya existe`,
+            message: `La categoría ${newCategory} ya existe`,
             type: "error",
           })
         ),
@@ -144,7 +148,6 @@ function* addCategorySagas(payload) {
     } else {
       checkIfTheCategoryNoExists = true;
     }
-
     if (validateInput && checkIfTheCategoryNoExists) {
       const data = {
         id: "",
