@@ -6,6 +6,7 @@ import {
   query,
   where,
   deleteDoc,
+  doc,
 } from "firebase/firestore";
 
 import fireBaseModule from "../utils/firebase";
@@ -181,11 +182,24 @@ function* addCategorySagas(payload) {
   }
 }
 function* deleteCategorySagas(payload) {
-  const idCategory = payload.value;
   try {
     yield put(accountantActions.setLoading(true));
+    const idCategory = payload.value;
+    const categories = yield select(getCategory);
+    const categoryRef = doc(
+      collection(fireBaseModule.db, "categories"),
+      idCategory
+    );
+    // Eliminar el elemento con el ID idCategory del arreglo categories
+    const updatedCategories = categories.filter(
+      (category) => category.id !== idCategory
+    );
+
+    // Actualizar el estado de las categorías con el nuevo arreglo
+    yield put(accountantActions.setCategory(updatedCategories));
     yield all([
-      call(deleteDoc, idCategory),
+      call(deleteDoc, categoryRef),
+
       put(
         notificationActions.setNotificationMessage({
           message: `Categoria ${idCategory} borrada`,
@@ -194,12 +208,12 @@ function* deleteCategorySagas(payload) {
       ),
       put(accountantActions.setLoading(false)),
     ]);
-  } catch {
+  } catch (error) {
     yield all([
       put(
         notificationActions.setNotificationMessage({
-          message: `Error en Sagas deleteCategorySagas `,
-          type: "success",
+          message: `Error en Sagas deleteCategorySagas: ${error.message}`,
+          type: "error",
         })
       ),
       put(accountantActions.setLoading(false)),

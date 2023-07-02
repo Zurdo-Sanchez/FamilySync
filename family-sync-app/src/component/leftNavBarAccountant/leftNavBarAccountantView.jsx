@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import {
   Popover,
   TextField,
@@ -16,14 +17,16 @@ import Styles from "../../styles/leftNavBarAccountantStyles";
 function LeftNavBarAccountantView(props) {
   const classes = Styles();
   const {
-    //state
+    // state
     getCategory,
-    //actions
+    // actions
     addCategory,
 
     categories,
     setCategories,
   } = props;
+
+  // State configuration
   const maxCharacterLength = 10;
   const minCharacterLength = 3;
   const [anchorEl, setAnchorEl] = useState(null);
@@ -31,24 +34,33 @@ function LeftNavBarAccountantView(props) {
   const [group, setGroup] = useState(false);
   const [showInputPopover, setShowInputPopover] = useState(false);
 
+  useEffect(() => {
+    setCategories(getCategory);
+  }, [categories]);
+
+  // Event handler for opening the popover
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // Event handler for closing the popover
   const handleClose = () => {
     setAnchorEl(null);
     setShowInputPopover(false);
   };
 
+  // Event handler for input change
   const handleInputChange = (event) => {
     if (inputValue.length < 10) setInputValue(event.target.value);
   };
 
+  // Event handler for selecting a group
   const handleSelectGroup = (value) => {
     setGroup(value);
     setShowInputPopover(true);
   };
 
+  // Event handler for adding a category
   const handledAddCategory = () => {
     addCategory(inputValue);
     setInputValue("");
@@ -66,7 +78,7 @@ function LeftNavBarAccountantView(props) {
         <Button>LOGOUT</Button>
       </Grid>
       <Grid>
-        <Button onClick={handleClick}>Agregar Categoria</Button>
+        <Button onClick={handleClick}>Add Category</Button>
         <Backdrop open={open} sx={{ zIndex: 1, backdropFilter: "blur(4px)" }}>
           <Popover
             id={id}
@@ -83,11 +95,11 @@ function LeftNavBarAccountantView(props) {
             }}
           >
             <Box sx={{ p: 2 }}>
-              <Button onClick={() => handleSelectGroup("Ingreso")}>
-                Ingreso
+              <Button onClick={() => handleSelectGroup("Income")}>
+                Income
               </Button>
-              <Button onClick={() => handleSelectGroup("Egreso")}>
-                Egreso
+              <Button onClick={() => handleSelectGroup("Expense")}>
+                Expense
               </Button>
             </Box>
           </Popover>
@@ -107,9 +119,9 @@ function LeftNavBarAccountantView(props) {
           }}
         >
           <Box sx={{ p: 2 }}>
-            <Typography>Nuevo {group}</Typography>
+            <Typography>New {group}</Typography>
             <TextField
-              label="Nueva Categoria"
+              label="New Category"
               value={inputValue}
               onChange={handleInputChange}
               fullWidth
@@ -123,9 +135,9 @@ function LeftNavBarAccountantView(props) {
               }}
             />
             {inputValue.length < minCharacterLength && (
-              <Typography>minimo {minCharacterLength} caracteres</Typography>
+              <Typography>Minimum {minCharacterLength} characters</Typography>
             )}
-            <Button onClick={() => handledAddCategory()}>Agregar</Button>
+            <Button onClick={() => handledAddCategory()}>Add</Button>
           </Box>
         </Popover>
       </Grid>
@@ -135,5 +147,13 @@ function LeftNavBarAccountantView(props) {
     </Grid>
   );
 }
+
+// Specify the types of required props
+LeftNavBarAccountantView.propTypes = {
+  getCategory: PropTypes.array.isRequired,
+  addCategory: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired,
+  setCategories: PropTypes.func.isRequired,
+};
 
 export default LeftNavBarAccountantView;
