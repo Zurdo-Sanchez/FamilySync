@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {
   Popover,
   TextField,
-  Checkbox,
   Button,
   Box,
   Grid,
@@ -12,6 +11,9 @@ import {
   InputAdornment,
 } from "@mui/material";
 
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import Styles from "../../styles/leftNavBarAccountantStyles";
 
 function LeftNavBarAccountantView(props) {
@@ -19,12 +21,15 @@ function LeftNavBarAccountantView(props) {
   const {
     // state
     getCategory,
+    loading,
     // actions
     addCategory,
-
+    deleteCategory,
     categories,
     setCategories,
   } = props;
+
+  const [menu, setMenu] = useState(0);
 
   // State configuration
   const maxCharacterLength = 10;
@@ -35,8 +40,8 @@ function LeftNavBarAccountantView(props) {
   const [showInputPopover, setShowInputPopover] = useState(false);
 
   useEffect(() => {
-    setCategories(getCategory);
-  }, [categories]);
+    setCategories(() => getCategory);
+  }, [loading, getCategory]);
 
   // Event handler for opening the popover
   const handleClick = (event) => {
@@ -47,6 +52,13 @@ function LeftNavBarAccountantView(props) {
   const handleClose = () => {
     setAnchorEl(null);
     setShowInputPopover(false);
+  };
+  const handleMenu = (value) => {
+    if (menu === value) {
+      setMenu(0);
+    } else {
+      setMenu(value);
+    }
   };
 
   // Event handler for input change
@@ -62,7 +74,11 @@ function LeftNavBarAccountantView(props) {
 
   // Event handler for adding a category
   const handledAddCategory = () => {
-    addCategory(inputValue);
+    const data = {
+      group: group,
+      name: inputValue,
+    };
+    addCategory(data);
     setInputValue("");
     handleClose();
   };
@@ -74,15 +90,62 @@ function LeftNavBarAccountantView(props) {
 
   return (
     <Grid className={classes.root}>
-      <Grid>
-        <Button>LOGOUT</Button>
+      <Grid className={classes.containerTitle}>
+        <Button>CONTROL DE GASTOS</Button>
       </Grid>
+      <Button
+        className={classes.categoriesButton}
+        onClick={() => handleMenu(1)}
+      >
+        {menu === 1 ? <ExpandLessIcon /> : <ExpandMoreIcon />} Categorias{" "}
+        {menu === 1 ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+      </Button>
       <Grid>
-        <Button onClick={handleClick}>Add Category</Button>
-        <Backdrop open={open} sx={{ zIndex: 1, backdropFilter: "blur(4px)" }}>
+        <Grid
+          className={`${classes.categoriesContainer} ${
+            menu === 1 ? classes.categoriesContainerShow : ""
+          }`}
+        >
+          <Button onClick={handleClick}>Add Category</Button>
+
+          {categories &&
+            categories.map((cat, index) => (
+              <Grid className={classes.containerItemOption}>
+                <Grid className={classes.itemsList} key={index + 1}>
+                  {cat.name}
+                </Grid>
+                <button onClick={() => deleteCategory(cat.id)}>delete</button>
+              </Grid>
+            ))}
+
+          <Backdrop open={open} sx={{ zIndex: 1, backdropFilter: "blur(4px)" }}>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              <Box sx={{ p: 2 }}>
+                <Button onClick={() => handleSelectGroup("Income")}>
+                  Income
+                </Button>
+                <Button onClick={() => handleSelectGroup("Expense")}>
+                  Expense
+                </Button>
+              </Box>
+            </Popover>
+          </Backdrop>
           <Popover
-            id={id}
-            open={open}
+            id={inputPopoverId}
+            open={inputPopoverOpen}
             anchorEl={anchorEl}
             onClose={handleClose}
             anchorOrigin={{
@@ -95,52 +158,36 @@ function LeftNavBarAccountantView(props) {
             }}
           >
             <Box sx={{ p: 2 }}>
-              <Button onClick={() => handleSelectGroup("Income")}>
-                Income
-              </Button>
-              <Button onClick={() => handleSelectGroup("Expense")}>
-                Expense
-              </Button>
+              <Typography>New {group}</Typography>
+              <TextField
+                label="New Category"
+                value={inputValue}
+                onChange={handleInputChange}
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {inputValue.length}/{maxCharacterLength}
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              {inputValue.length < minCharacterLength && (
+                <Typography>Minimum {minCharacterLength} characters</Typography>
+              )}
+              <Button onClick={() => handledAddCategory()}>Add</Button>
             </Box>
           </Popover>
-        </Backdrop>
-        <Popover
-          id={inputPopoverId}
-          open={inputPopoverOpen}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
+        </Grid>
+        <Button
+          className={classes.categoriesButton}
+          onClick={() => handleMenu(2)}
         >
-          <Box sx={{ p: 2 }}>
-            <Typography>New {group}</Typography>
-            <TextField
-              label="New Category"
-              value={inputValue}
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {inputValue.length}/{maxCharacterLength}
-                  </InputAdornment>
-                ),
-              }}
-            />
-            {inputValue.length < minCharacterLength && (
-              <Typography>Minimum {minCharacterLength} characters</Typography>
-            )}
-            <Button onClick={() => handledAddCategory()}>Add</Button>
-          </Box>
-        </Popover>
+          Opciones {menu === 2 ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </Button>
       </Grid>
+
       <Grid>
         <Button>LOGOUT</Button>
       </Grid>
