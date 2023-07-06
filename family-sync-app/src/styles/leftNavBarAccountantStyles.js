@@ -1,4 +1,5 @@
 import { makeStyles } from "@mui/styles";
+import { lighten } from "@mui/system";
 
 const Styles = makeStyles((theme) => {
   const { typography, palette } = theme;
@@ -24,7 +25,11 @@ const Styles = makeStyles((theme) => {
       },
     },
     title: {
-      fontSize: `${pxToRem(30)} !important`,
+      fontSize: `${pxToRem(18)} !important`,
+      color: palette.common.white,
+    },
+    subTitle: {
+      fontSize: `${pxToRem(16)} !important`,
       color: palette.common.white,
     },
     categoriesContainer: {
@@ -71,6 +76,50 @@ const Styles = makeStyles((theme) => {
       padding: `0 ${pxToRem(10)} ${pxToRem(10)} ${pxToRem(10)}`,
       flexDirection: "row",
       justifyContent: "space-between",
+    },
+    containerSubTitle: {
+      display: "flex",
+      justifyContent: "space-between",
+    },
+    containerIncome: {
+      background: lighten(palette.common.green, 0.2),
+      borderRadius: `${pxToRem(0)} ${pxToRem(0)} ${pxToRem(10)} ${pxToRem(10)}`,
+      paddingTop: pxToRem(5),
+      transition: "background-color 0.6s ease",
+    },
+    containerExpense: {
+      background: lighten(palette.common.red, 0.1),
+      borderRadius: `${pxToRem(0)} ${pxToRem(0)} ${pxToRem(10)} ${pxToRem(10)}`,
+      paddingTop: pxToRem(5),
+      transition: "background-color 0.6s ease",
+    },
+    buttonIncome: {
+      background: palette.common.green,
+      width: "50%",
+      borderRadius: 0,
+      borderTopLeftRadius: pxToRem(10),
+      color: palette.common.white,
+      textAlign: "center",
+      fontWeight: "700",
+      transition: "background-color 0.6s ease, font-size 0.6s ease",
+      "&:hover": {
+        backgroundColor: lighten(palette.common.green, 0.2),
+        fontSize: pxToRem(14),
+      },
+    },
+    buttonExpense: {
+      background: palette.common.red,
+      width: "50%",
+      borderRadius: 0,
+      borderTopRightRadius: pxToRem(10),
+      color: palette.common.white,
+      textAlign: "center",
+      fontWeight: "700",
+      transition: "background-color 0.3s ease, font-size 0.3s ease",
+      "&:hover": {
+        backgroundColor: lighten(palette.common.red, 0.2),
+        fontSize: pxToRem(14),
+      },
     },
   };
 });

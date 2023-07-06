@@ -13,6 +13,7 @@ import {
 
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import Styles from "../../styles/leftNavBarAccountantStyles";
 
@@ -38,6 +39,12 @@ function LeftNavBarAccountantView(props) {
   const [inputValue, setInputValue] = useState("");
   const [group, setGroup] = useState(false);
   const [showInputPopover, setShowInputPopover] = useState(false);
+  const [showCategory, setShowCategories] = useState(true); // true = show income - false = shew expense
+
+  const open = Boolean(anchorEl);
+  const id = open ? "popover" : undefined;
+  const inputPopoverOpen = showInputPopover && open;
+  const inputPopoverId = inputPopoverOpen ? "input-popover" : undefined;
 
   useEffect(() => {
     setCategories(() => getCategory);
@@ -69,6 +76,7 @@ function LeftNavBarAccountantView(props) {
   // Event handler for selecting a group
   const handleSelectGroup = (value) => {
     setGroup(value);
+    setShowCategories(value === "Income" ? 1 : 0);
     setShowInputPopover(true);
   };
 
@@ -83,15 +91,14 @@ function LeftNavBarAccountantView(props) {
     handleClose();
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "popover" : undefined;
-  const inputPopoverOpen = showInputPopover && open;
-  const inputPopoverId = inputPopoverOpen ? "input-popover" : undefined;
+  const handleShowCategory = (value) => {
+    setShowCategories(value);
+  };
 
   return (
     <Grid className={classes.root}>
       <Grid className={classes.containerTitle}>
-        <Button>CONTROL DE GASTOS</Button>
+        <Typography className={classes.title}>CONTROL DE GASTOS</Typography>
       </Grid>
       <Button
         className={classes.categoriesButton}
@@ -106,17 +113,47 @@ function LeftNavBarAccountantView(props) {
             menu === 1 ? classes.categoriesContainerShow : ""
           }`}
         >
-          <Button onClick={handleClick}>Add Category</Button>
-
-          {categories &&
-            categories.map((cat, index) => (
-              <Grid className={classes.containerItemOption}>
-                <Grid className={classes.itemsList} key={index + 1}>
-                  {cat.name}
-                </Grid>
-                <button onClick={() => deleteCategory(cat.id)}>delete</button>
-              </Grid>
-            ))}
+          <Button onClick={handleClick}>Agregar Categoria</Button>
+          <Grid>
+            <Grid className={classes.containerSubTitle}>
+              <Typography
+                className={classes.buttonIncome}
+                onClick={() => handleShowCategory(1)}
+              >
+                Ingresos
+              </Typography>
+              <Typography
+                className={classes.buttonExpense}
+                onClick={() => handleShowCategory(0)}
+              >
+                Egresos
+              </Typography>
+            </Grid>
+            <Grid
+              className={
+                showCategory
+                  ? classes.containerIncome
+                  : classes.containerExpense
+              }
+            >
+              {categories &&
+                categories
+                  .filter(
+                    (cat) => cat.group === (showCategory ? "Income" : "Expense")
+                  )
+                  .map((cat, index) => (
+                    <Grid
+                      className={classes.containerItemOption}
+                      key={index + 1}
+                    >
+                      <Grid className={classes.itemsList}>{cat.name}</Grid>
+                      <DeleteForeverIcon
+                        onClick={() => deleteCategory(cat.id)}
+                      />
+                    </Grid>
+                  ))}
+            </Grid>
+          </Grid>
 
           <Backdrop open={open} sx={{ zIndex: 1, backdropFilter: "blur(4px)" }}>
             <Popover

@@ -15,6 +15,8 @@ const theme = createTheme({
     common: {
       white: "#FFFFFF",
       black: "#000",
+      red: "#FF0000",
+      green: "#16b555",
     },
     background: {
       main: "linear-gradient(150deg, #6c3483, #58d68d)",

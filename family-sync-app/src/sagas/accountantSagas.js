@@ -37,6 +37,7 @@ function* getDBCategoriesSagas() {
     const data = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       name: doc.data().name,
+      group: doc.data().group,
     }));
     data.map((data) => categories.push(data));
 
