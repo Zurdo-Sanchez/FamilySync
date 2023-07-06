@@ -9,10 +9,13 @@ const Styles = makeStyles((theme) => {
       background: palette.background.main,
     },
     loadingContainer: {
+      position: "absolute",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
       height: "100vh",
+      width: "100vw",
+      filter: `blur(${pxToRem(2)})`
     },
     AcountantContainer: {
       display: "flex",

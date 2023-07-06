@@ -20,7 +20,7 @@ import * as notificationActions from "../actions/notificationActions";
 import * as acountantActionsType from "../actions/actionsType/accountantActionsType";
 
 // Selectors
-import { getCategory, loading } from "../selectors/accountantSelector";
+import { getCategory } from "../selectors/accountantSelector";
 import { getUserSelector } from "../selectors/loginSelector";
 //functions
 function* getDBCategoriesSagas() {
@@ -63,8 +63,8 @@ function* getDBCategoriesSagas() {
 function* addCategorySagas(payload) {
   try {
     yield put(accountantActions.setLoading(true));
-
-    const newCategory = payload.value.replace(
+    const group = payload.value.group;
+    const newCategory = payload.value.name.replace(
       /\b\w+/g,
       (match) => match.charAt(0).toUpperCase() + match.slice(1).toLowerCase()
     );
@@ -150,8 +150,8 @@ function* addCategorySagas(payload) {
     }
     if (validateInput && checkIfTheCategoryNoExists) {
       const data = {
-        id: "",
         userId: user.uid,
+        group: group,
         name: newCategory,
       };
       const collectionRef = collection(fireBaseModule.db, "categories");
