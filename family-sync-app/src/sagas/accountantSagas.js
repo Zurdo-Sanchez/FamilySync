@@ -166,7 +166,7 @@ function* addCategorySagas(payload) {
         put(accountantActions.setCategory(categories)),
         put(
           notificationActions.setNotificationMessage({
-            message: `Categoria ${newCategory} agregada`,
+            message: `Categoria ${newCategory} agregada en ${group}`,
             type: "success",
           })
         ),

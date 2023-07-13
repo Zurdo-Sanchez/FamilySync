@@ -48,7 +48,7 @@ function LeftNavBarAccountantView(props) {
 
   useEffect(() => {
     setCategories(() => getCategory);
-  }, [loading, getCategory]);
+  }, [loading, getCategory, setCategories]);
 
   // Event handler for opening the popover
   const handleClick = (event) => {
@@ -119,12 +119,14 @@ function LeftNavBarAccountantView(props) {
               <Typography
                 className={classes.buttonIncome}
                 onClick={() => handleShowCategory(1)}
+                data-testid={"category-income"}
               >
                 Ingresos
               </Typography>
               <Typography
                 className={classes.buttonExpense}
                 onClick={() => handleShowCategory(0)}
+                data-testid={"category-expense"}
               >
                 Egresos
               </Typography>
@@ -148,7 +150,9 @@ function LeftNavBarAccountantView(props) {
                     >
                       <Grid className={classes.itemsList}>{cat.name}</Grid>
                       <DeleteForeverIcon
+                        id={`delete-button-${cat.id}`}
                         onClick={() => deleteCategory(cat.id)}
+                        data-testid={`delete-icon-${cat.group}-${index + 1}`}
                       />
                     </Grid>
                   ))}
@@ -169,6 +173,7 @@ function LeftNavBarAccountantView(props) {
                 vertical: "top",
                 horizontal: "left",
               }}
+              data-testid={`first-popover`}
             >
               <Box sx={{ p: 2 }}>
                 <Button onClick={() => handleSelectGroup("Income")}>
@@ -208,6 +213,9 @@ function LeftNavBarAccountantView(props) {
                       {inputValue.length}/{maxCharacterLength}
                     </InputAdornment>
                   ),
+                }}
+                inputProps={{
+                  "data-testid": "new-category", // Aquí está el atributo correcto
                 }}
               />
               {inputValue.length < minCharacterLength && (
