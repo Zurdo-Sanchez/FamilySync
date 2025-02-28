@@ -23,6 +23,7 @@ function* authSagas(payload) {
     email: "",
     photoURL: "",
   };
+  debugger;
   try {
     const exampleData = {
       name: "John Doe",
@@ -42,7 +43,7 @@ function* authSagas(payload) {
     userData.displayName = res[0] && res[0].displayName;
     userData.email = res[0] && res[0].email;
     userData.photoURL = res[0] && res[0].photoURL;
-
+    debugger;
     yield all([
       put(userActions.setUserAction(userData)),
       put(userActions.setIsLoggedAction(true)),
